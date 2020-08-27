@@ -1,4 +1,4 @@
-# Rapid introduction to Modern CMake by examples
+# The usage of PUBLIC and PRIVATE keywords in Modern CMake
 
 The aim of this tutorial is to describe the usage of `PUBLIC` and `PRIVATE` keywords of Modern CMake and clarify
 the meanings of these keywords.
@@ -20,21 +20,30 @@ Tutorial steps are in branches of this repo. You can access them by changing the
 
 * In `Step2`, we will add log library into our program.
 
-* In `Step3`, we will add `mylib` which will depend on `csapp` which satisfies the following design properties  
+* In `Step3`, we will add `mylib` library into our project which will depend on `csapp` library. 
 
-# Design
+We enforce the following design policy in Step 3.  
+
+## Design policy
 
 Our aim in `Step 3` is: 
 
-* driver uses a function `F` implemented by mylib
-* mylib implements `F` by using csapp library functions
-* We want driver to access mylib and use `F` but driver should not be able to access 
-  csapp library
-* mylib has a helper function `G` that it uses to implement `F`. But `G` shouldn't be 
-  accessible to driver.
-* So, we simply want to make mylib-->csapp dependency private!
+* to build a `driver` which uses a function `F` implemented by mylib : `driver --> mylib`
+* mylib implements `F` by using `csapp` library functions : `mylib --> csapp`
+* driver needs to access `mylib` and use `F` but driver should not be able to access 
+  `csapp` library : `driver --x--> csapp`
+* `mylib` has a helper function `G` that is used to implement `F`. But `G` shouldn't be 
+  accessible to `driver`. : `driver --x--> mylib's private headers`
+* `csapp` should not be able to access `log` library: `csapp --X--> log`     
+* So, we simply want to make `mylib-->csapp` dependency private!
 
- Below is the summary.
+ Below is the summary of our design policy
 
- driver --> mylib ---> csapp --> pthread
+ * `driver --> mylib ---> csapp --> pthread` 
+ 
+ * `driver --> log`
+
+ * `driver --X--> csapp`
+
+ * `csapp --X--> log`       
 
