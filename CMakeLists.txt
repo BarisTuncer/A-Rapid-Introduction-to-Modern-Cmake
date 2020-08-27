@@ -1,12 +1,12 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.18)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+
 project(NonTrivialCMakeExample)
-set(CMAKE_BUILD_TYPE Debug)
+#Adds options to the compilation of source files.
+# NOTE: This is global. Act for all targets in the current directory and below that are added after this command is invoked
+add_compile_options(-Wall -Wextra)
 add_subdirectory(Driver)
-add_subdirectory(Log)
 
-# int this example
-
-###  driver ---PRIVATE (or PUBLIC)---> log
+# In this example we will simply compile driver 
 
