@@ -1,5 +1,5 @@
 #include <stdio.h>
 int main(){
-    printf("Wellcome to the Step1!\n");
+    printf("Hello Modern CMake!\n");
     return 0;
 }
