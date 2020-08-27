@@ -4,10 +4,10 @@ In this project we simply want to compile **[main.c](Driver/main.c)** which want
 
 ## Global set up 
 
-CMake starts its journey by checking the CMakeLists.txt in the top folder
-which is `NonTrivialCMakeExp/CMakeLists.txt` in our case. 
+CMake starts its journey by checking the **[CMakeLists.txt](CMakeLists.txt)** inside the top project folder
+which is `NonTrivialCMakeExp` in our case. 
 
-We start by investigating **[CMakeLists.txt](CMakeLists.txt)** inside our project `NonTrivialCMakeExp` folder:
+We start by investigating **[CMakeLists.txt](CMakeLists.txt)** :
 
 * `cmake_minimum_required(VERSION 3.18)` : Sets the minimum required version of cmake for a project. You can 
 check your own version of CMake by `cmake --version` in the terminal.
@@ -25,7 +25,7 @@ as optional and may “decay” to a previous standard if the requested is not a
 
 ## Preparing make file to compile main
 
-Now CMake continues its journey by checking **[CMakeLists.txt](Driver/CMakeLists.txt)**.
+Now CMake continues its journey by checking **[CMakeLists.txt](Driver/CMakeLists.txt)** inside the `Driver` folder.
 
 We start by naming this sub-project as `driver` by declaring `project(driver)`.
 
