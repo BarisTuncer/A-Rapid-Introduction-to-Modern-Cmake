@@ -1,5 +1,4 @@
 
-
 project(csapp)
 add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCE_DIR}/src/csapp.c)
 # make it PUBLIC anyone who "links" it can use it: So mylib can see it but not driver!

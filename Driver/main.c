@@ -1,7 +1,7 @@
 #include <stdio.h>
 //#include "csapp.h"  // will create an error unless linking in mylib/CMakeLists.txt is PUBLIC
 #include "mylib.h"
-// #include "mylib_private.h" -- > will give an error whether linking in mylib/CMakeLists.txt is PUBLIC or PRIVATE
+//#include "mylib_private.h" //-- > will give an error whether linking in mylib/CMakeLists.txt is PUBLIC or PRIVATE
 #include "log.h"     // shouldn't be accessible to mylib
 int main(){
     printf("Hello csapp!\n");

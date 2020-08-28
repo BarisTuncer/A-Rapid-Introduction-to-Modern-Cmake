@@ -1,7 +1,7 @@
 # PRIVATE vs PUBLIC
 
 Our aim in `Step 3` is to describe the usage of `PUBLIC` and `PRIVATE` keywords of Modern CMake and clarify
-their meanings. In this section we want to:
+their meanings. In this section we want to: (`--->` means can access)
 
 1. build a `driver` which uses a function `F` implemented by mylib : `driver --> mylib`
 2. mylib implements `F` by using `csapp` library functions : `mylib --> csapp`
@@ -9,7 +9,7 @@ their meanings. In this section we want to:
   `csapp` library : `driver --x--> csapp`
 4. `mylib` has a helper function `G` that is used to implement `F`. But `G` shouldn't be 
   accessible to `driver`. : `driver --x--> mylib's private headers`
-5. `csapp` should not be able to access `log` library: `csapp --X--> log`     
+5. `mylib` should not be able to access `log` library: `mylib --X--> log`     
 6. So, we simply want to make `mylib-->csapp` dependency private!
 
  Below is the summary of our design policy
@@ -20,7 +20,7 @@ their meanings. In this section we want to:
 
  * `driver --X--> csapp`
 
- * `csapp --X--> log`       
+ * `mylib --X--> log`       
 
 # Targets are like objects
 
@@ -88,7 +88,9 @@ To convince yourself, uncomment `#include "mylib_provivate` in `main.c` and see 
 
 * `target_link_libraries(mylib PRIVATE csapp)`
 
-Any client that links `mylib` *cannot* access the properties of `csapp`.
+Any client that links `mylib` *cannot* access the public headers of `csapp`. 
+
+This is the tricky part: Note again that `csapp` announced `csapp.h` PUBLIC\`ly to any client that links `csapp`, so `mylib.c` can access `csapp.h`. But any client that links `mylib` (which is `driver` in our case) cannot access `csapp.h`, since linkage of `mylib` and `csapp` is PRIVATE.
 
 **Exp**: `main.c` can access `mylib.h` and `mylib.c` can access `csapp.h`. But `main.c` cannot access `csapp.h`. 
 Uncomment `#include "csapp.h` in `main.c` and see what happens!
@@ -96,11 +98,11 @@ Uncomment `#include "csapp.h` in `main.c` and see what happens!
 Hence we have `driver --X--> csapp`
 
 
-# csapp cannot access log
+# mylib cannot access log
 
 Also,
 
-* `csapp.c` cannot access `log.h` since it didn't link `log` library.
+* `mylib.c` cannot access `log.h` since `mylib` didn't link `log` library.
 
 
 # Breaking the law
@@ -109,8 +111,8 @@ Now, let's break the design principle and link mylib to csapp publicly!
 
 * If we declare `target_link_libraries(mylib PUBLIC csapp)`
 
-Then any client that links `mylib` can access the properties of `csapp`.
+Then any client that links `mylib` can access the public headers of `csapp`.
 
 **Exp**: `main.c` can access `mylib.h` and `mylib.c` can access `csapp.h`. Now `main.c` can access `csapp.h`. 
 Uncomment `#include "csapp.h` in `main.c` and see that there won't be any error!
-
+Note also that even in this case, `main.c` cannot access `mylib_private.h`
