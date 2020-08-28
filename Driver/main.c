@@ -4,7 +4,7 @@
 // #include "mylib_private.h" -- > will give an error whether linking in mylib/CMakeLists.txt is PUBLIC or PRIVATE
 #include "log.h"     // shouldn't be accessible to mylib
 int main(){
-    printf("Hello csapp!\n");
+    printf("Hello master!\n");
     //Sleep(3);   // from "csapp.h"
     int i = fantastic_sum(3,5);
     //secret_helper_for_fantastic_sum(int); // from "mylib_private.h"
