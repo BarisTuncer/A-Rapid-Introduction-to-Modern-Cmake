@@ -61,27 +61,56 @@ you tell CMake
 
 * If we use `PRIVATE` this won't be the case.
 
-Now,
+# driver can access mylib and log
 
-* `target_link_libraries(driver PRIVATE mylib`) and  `target_link_libraries(driver PRIVATE log`): Enables
-`driver`'s access to `mylib` and `log`'s public resources, i.e., `main.c` can include `mylib.h` and `log.h` 
-and use these libraries.(Here `PRIVATE` or `PUBLIC` is not important since `driver` as an executible is the final destination)
+Now we take a look at `Driver/CMakeLists.txt`. When the macros expanded we have 
+
+* `target_link_libraries(driver PRIVATE mylib`) and  `target_link_libraries(driver PRIVATE log`).
+
+This enables `driver`'s access to `mylib` and `log`'s public resources, i.e., `main.c` can include `mylib.h` and `log.h` 
+and use these libraries.
+
+Here `PRIVATE` or `PUBLIC` is not important since `driver` as an executible is the final destination
+
 Hence we have `driver-->mylib` and `driver-->log`
 
-* `target_include_directories(mylib PUBLIC Mylib/include)` : Any `client` that links `mylib` can acces the
-public headers of `mylib` inside the folder `Mylib/include` but cannot access it's private headers (and sources) residing inside `MyLib/src`
+# driver cannot access csapp and mylib's private headers
+
+Now we take a look at `Mylib/CMakeLists.txt`. When the macros expanded we have 
+
+* `target_include_directories(mylib PUBLIC Mylib/include)`.
+
+Any `client` that links `mylib` can acces the public headers of `mylib` inside the folder `Mylib/include` , but *cannot* access it's private headers (and sources) residing inside `MyLib/src`
+
 **Exp**: Since `driver` links `mylib`, `main.c` can access `mylib.h` but it cannot access `mylib_provate.h`.
 To convince yourself, uncomment `#include "mylib_provivate` in `main.c` and see what happens!
 
-* `target_link_libraries(mylib PRIVATE csapp)`: Any client that links `mylib` cannot access the properties of `csapp`.
+
+* `target_link_libraries(mylib PRIVATE csapp)`
+
+Any client that links `mylib` *cannot* access the properties of `csapp`.
+
 **Exp**: `main.c` can access `mylib.h` and `mylib.c` can access `csapp.h`. But `main.c` cannot access `csapp.h`. 
 Uncomment `#include "csapp.h` in `main.c` and see what happens!
 
+Hence we have `driver --X--> csapp`
+
+
+# csapp cannot access log
+
+Also,
+
 * `csapp.c` cannot access `log.h` since it didn't link `log` library.
+
 
 # Breaking the law
 
-* If `target_link_libraries(mylib PUBLIC csapp)`: Any client that links `mylib` can access the properties of `csapp`.
+Now, let's break the design principle and link mylib to csapp publicly!
+
+* If we declare `target_link_libraries(mylib PUBLIC csapp)`
+
+Then any client that links `mylib` can access the properties of `csapp`.
+
 **Exp**: `main.c` can access `mylib.h` and `mylib.c` can access `csapp.h`. Now `main.c` can access `csapp.h`. 
 Uncomment `#include "csapp.h` in `main.c` and see that there won't be any error!
 
