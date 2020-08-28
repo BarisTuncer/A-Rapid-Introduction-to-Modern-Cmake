@@ -34,7 +34,7 @@ Our aim in `Step 3` is:
   `csapp` library : `driver --x--> csapp`
 * `mylib` has a helper function `G` that is used to implement `F`. But `G` shouldn't be 
   accessible to `driver`. : `driver --x--> mylib's private headers`
-* `csapp` should not be able to access `log` library: `csapp --X--> log`     
+* `mylib` should not be able to access `log` library: `mylib --X--> log`     
 * So, we simply want to make `mylib-->csapp` dependency private!
 
  Below is the summary of our design policy
@@ -45,5 +45,5 @@ Our aim in `Step 3` is:
 
  * `driver --X--> csapp`
 
- * `csapp --X--> log`       
+ * `mylib --X--> log`       
 
