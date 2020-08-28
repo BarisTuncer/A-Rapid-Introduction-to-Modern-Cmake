@@ -1,41 +1,16 @@
-# The usage of PUBLIC and PRIVATE keywords in Modern CMake
+# PRIVATE vs PUBLIC
 
-The aim of this tutorial is to describe the usage of `PUBLIC` and `PRIVATE` keywords of Modern CMake and clarify
-the meanings of these keywords.
+Our aim in `Step 3` is to describe the usage of `PUBLIC` and `PRIVATE` keywords of Modern CMake and clarify
+their meanings. In this section we want to:
 
-To make this tutorial joyful I used 2 external libraries.
-
-1 - csapp.h : This library is developed for Computer Systems: A Programmer's Perspective book by Randal E. Bryant and David R. O'Hallaron,
-which contains wrappers for some system functions in C and also implementation of robust IO functions. It is publicly available from the website of the book : https://csapp.cs.cmu.edu/. The reason I chose this library is that you need to link it with pthread library via `-pthread` option. Thank you Randal E. Bryant and David R. O'Hallaron for making this library accessible for us!
-
-2- log.h: This library is a simple usage logging library developed by rxi and publicly available at https://github.com/rxi/log.c/blob/master/README.md.
-The reason I chose this library is that you need to compile with `-DLOG_USE_COLOR` to get a colorful logging output. Thank you rxi for making this library accessible for us.
-
-## Tutorial Steps
-
-Tutorial steps are in branches of this repo. You can access them by changing the branch from the `master` to the one of the branches above or via 
-`git checkout`. Explanation of Steps are given in the README files of the branches.
-
-* In `Step1`, we will compile a simple "Hello Modern CMake" program.
-
-* In `Step2`, we will add log library into our program.
-
-* In `Step3`, we will add `mylib` library into our project which will depend on `csapp` library. 
-
-We enforce the following design policy in Step 3.  
-
-## Design policy
-
-Our aim in `Step 3` is: 
-
-* to build a `driver` which uses a function `F` implemented by mylib : `driver --> mylib`
-* mylib implements `F` by using `csapp` library functions : `mylib --> csapp`
-* driver needs to access `mylib` and use `F` but driver should not be able to access 
+1. build a `driver` which uses a function `F` implemented by mylib : `driver --> mylib`
+2. mylib implements `F` by using `csapp` library functions : `mylib --> csapp`
+3. driver needs to access `mylib` and use `F` but driver should not be able to access 
   `csapp` library : `driver --x--> csapp`
-* `mylib` has a helper function `G` that is used to implement `F`. But `G` shouldn't be 
+4. `mylib` has a helper function `G` that is used to implement `F`. But `G` shouldn't be 
   accessible to `driver`. : `driver --x--> mylib's private headers`
-* `csapp` should not be able to access `log` library: `csapp --X--> log`     
-* So, we simply want to make `mylib-->csapp` dependency private!
+5. `csapp` should not be able to access `log` library: `csapp --X--> log`     
+6. So, we simply want to make `mylib-->csapp` dependency private!
 
  Below is the summary of our design policy
 
@@ -46,4 +21,67 @@ Our aim in `Step 3` is:
  * `driver --X--> csapp`
 
  * `csapp --X--> log`       
+
+# Targets are like objects
+
+CMake treats targets as object-like entities and uses the targets properties (members). Some of the properties of targets are: 
+
+1. `INCLUDE_DIRECTORIES`: List of preprocessor include file search directories.
+
+2. `COMPILE_DEFINITIONS`: Preprocessor definitions for compiling a target’s sources. (LIKE: `UNIT_TESTING=1` or `IO_TEST=1`)
+
+3. `COMPILE_OPTIONS`: List of options to pass to the compiler. (LIKE: `Werror` `Wall` `Wextra`)
+    
+4. ... There are many: See  https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html#target-properties 
+
+
+These properties (members) manipulated by (member-functions like ) 
+
+* `target_include_directories()` 
+
+* `target_compile_definitions()`
+
+* `target_compile_options()`
+
+The scope of theses properties are defined by the keywords `PUBLIC-PRIVATE`:
+
+(There is one more keyword `INTERFACE`: See the discussion: https://stackoverflow.com/questions/26243169/cmake-target-include-directories-meaning-of-scope )
+
+But what do we mean by scope?
+
+When you use the `PRIVATE` keyword in `target_include_directories(<target> ...)` and alike, 
+you tell CMake to populate members of `<target>`
+
+When you use the `PUBLIC` keyword in `target_include_directories(<target>)` and alike, 
+you tell CMake 
+
+* to populate members of `<target>` and also 
+
+* tell CMake to append members of `<target>` to any `<client>` members of which links `<target>`. 
+
+* If we use `PRIVATE` this won't be the case.
+
+Now,
+
+* `target_link_libraries(driver PRIVATE mylib`) and  `target_link_libraries(driver PRIVATE log`): Enables
+`driver`'s access to `mylib` and `log`'s public resources, i.e., `main.c` can include `mylib.h` and `log.h` 
+and use these libraries.(Here `PRIVATE` or `PUBLIC` is not important since `driver` as an executible is the final destination)
+Hence we have `driver-->mylib` and `driver-->log`
+
+* `target_include_directories(mylib PUBLIC Mylib/include)` : Any `client` that links `mylib` can acces the
+public headers of `mylib` inside the folder `Mylib/include` but cannot access it's private headers (and sources) residing inside `MyLib/src`
+**Exp**: Since `driver` links `mylib`, `main.c` can access `mylib.h` but it cannot access `mylib_provate.h`.
+To convince yourself, uncomment `#include "mylib_provivate` in `main.c` and see what happens!
+
+* `target_link_libraries(mylib PRIVATE csapp)`: Any client that links `mylib` cannot access the properties of `csapp`.
+**Exp**: `main.c` can access `mylib.h` and `mylib.c` can access `csapp.h`. But `main.c` cannot access `csapp.h`. 
+Uncomment `#include "csapp.h` in `main.c` and see what happens!
+
+* `csapp.c` cannot access `log.h` since it didn't link `log` library.
+
+# Breaking the law
+
+* If `target_link_libraries(mylib PUBLIC csapp)`: Any client that links `mylib` can access the properties of `csapp`.
+**Exp**: `main.c` can access `mylib.h` and `mylib.c` can access `csapp.h`. Now `main.c` can access `csapp.h`. 
+Uncomment `#include "csapp.h` in `main.c` and see that there won't be any error!
 
