@@ -29,7 +29,7 @@ cmake script developed by `StableCoder`: https://github.com/StableCoder/cmake-sc
 
 Thank you George for making this awesome scripts available for us!
 
-Note that cmake-scripts by `StableCoder` under the Apache Licence.
+Note that cmake-scripts by `StableCoder` under the `Apache License`.
 
 Like `MIT Licence`, `Apache License` is also a permissive license. However, it has stringent terms when it comes to modifications. It requires you to explicitly list out all the modifications that you’ve done in the original software, i.e., you’re required to preserve modification notices.
 
