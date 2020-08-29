@@ -29,6 +29,13 @@ cmake script developed by `StableCoder`: https://github.com/StableCoder/cmake-sc
 
 Thank you George for making this avewome scripts available for us!
 
+Note that cmake-scripts by `StableCoder` under the Apache Licence.
+
+Like `MIT Licence`, `Apache License` is also a permissive license. However, it has stringent terms when it comes to modifications. It requires you to explicitly list out all the modifications that you’ve done in the original software, i.e., you’re required to preserve modification notices.
+
+To learn more  about the differences between `MIT` and `Apache` licences, see for example, https://resources.whitesourcesoftware.com/blog-whitesource/top-10-apache-license-questions-answered 
+
+
 ## Set the searching location for cmake 'include' locations
 
 First create a `cmake/modules` folder on top level of your project and include `dependency-graph.cmake`
