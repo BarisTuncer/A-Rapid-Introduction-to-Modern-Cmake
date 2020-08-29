@@ -1,5 +1,8 @@
 # Dependency Graph
 
+sudo apt-get install clang-format
+
+
 CMake can generate Graphviz files showing the dependencies between the targets in a project, as well as external libraries which are linked against.
 
 For more details, see: https://cmake.org/cmake/help/latest/module/CMakeGraphVizOptions.html
