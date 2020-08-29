@@ -27,13 +27,13 @@ The different dependency types `PUBLIC`, `INTERFACE` and `PRIVATE` are represent
 You can create a dependency graph of your project in very simple way by the
 cmake script developed by `StableCoder`: https://github.com/StableCoder/cmake-scripts
 
-Thank you George for making this avewome scripts available for us!
+Thank you George for making this awesome scripts available for us!
 
 Note that cmake-scripts by `StableCoder` under the Apache Licence.
 
 Like `MIT Licence`, `Apache License` is also a permissive license. However, it has stringent terms when it comes to modifications. It requires you to explicitly list out all the modifications that you’ve done in the original software, i.e., you’re required to preserve modification notices.
 
-To learn more  about the differences between `MIT` and `Apache` licences, see for example, https://resources.whitesourcesoftware.com/blog-whitesource/top-10-apache-license-questions-answered 
+To learn more  about the differences between `MIT` and `Apache` licenses, see for example, https://resources.whitesourcesoftware.com/blog-whitesource/top-10-apache-license-questions-answered 
 
 
 ## Set the searching location for cmake 'include' locations
@@ -52,7 +52,7 @@ to search for cmake modules.
 
 2. `gen_dep_graph("png")` This will generate an executable `dep-graph-${PROJECT_NAME}`.
 
-You need to run the executable, to see the generated file which is of type `png` in our case. You could choose `pdf` or any of your favourite format.
+You need to run the executable, to see the generated file which is of type `png` in our case. You could choose `pdf` or any of your favorite format.
 
 
 
