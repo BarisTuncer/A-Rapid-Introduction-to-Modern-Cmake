@@ -6,10 +6,14 @@ the meanings of these keywords.
 To make this tutorial joyful I used 2 external libraries.
 
 1 - csapp.h : This library is developed for Computer Systems: A Programmer's Perspective book by Randal E. Bryant and David R. O'Hallaron,
-which contains wrappers for some system functions in C and also implementation of robust IO functions. It is publicly available from the website of the book : https://csapp.cs.cmu.edu/. The reason I chose this library is that you need to link it with pthread library via `-pthread` option. Thank you Randal E. Bryant and David R. O'Hallaron for making this library accessible for us!
+which contains wrappers for some system functions in C and also implementation of robust IO functions. It is publicly available from the website of the book : https://csapp.cs.cmu.edu/. The reason I chose this library is that you need to link it with pthread library.
+
+Thank you Randal E. Bryant and David R. O'Hallaron for making this library accessible for us!
 
 2- log.h: This library is a simple usage logging library developed by rxi and publicly available at https://github.com/rxi/log.c/blob/master/README.md.
-The reason I chose this library is that you need to compile with `-DLOG_USE_COLOR` to get a colorful logging output. Thank you rxi for making this library accessible for us.
+The reason I chose this library is that you need to compile with `-DLOG_USE_COLOR` to get a colorful logging output. 
+
+Thank you rxi for making this library accessible for us.
 
 ## Tutorial Steps
 
@@ -26,7 +30,7 @@ We enforce the following design policy in Step 3.
 
 ## Design policy
 
-Our aim in `Step 3` is: 
+Our aim in `Step 3` is: (--> means can access)
 
 * to build a `driver` which uses a function `F` implemented by mylib : `driver --> mylib`
 * mylib implements `F` by using `csapp` library functions : `mylib --> csapp`
