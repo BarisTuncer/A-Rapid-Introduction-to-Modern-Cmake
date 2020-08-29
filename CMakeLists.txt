@@ -2,17 +2,16 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 project(NonTrivialCMakeExample)
-add_subdirectory(Csapp)
-add_subdirectory(Mylib)
 add_subdirectory(Driver)
-add_subdirectory(Log)
+add_subdirectory(Layer2)
+add_subdirectory(Layer1)
 
-# int this example
+# int this Lab
 
 ###  driver ---PRIVATE (or PUBLIC)---> mylib ---PRIVATE---> csapp ---PUBLIC---> pthread
-###    |
-###    v
-###   log
+###    |                                |
+###    v                                |
+###   log  <-----------------------------
 
 #[[
     1 - driver can access mylib but it can't access libcsapp unless mylib links libcsapp PUBLIC'ly
