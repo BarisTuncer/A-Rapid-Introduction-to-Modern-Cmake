@@ -1,118 +1,56 @@
-# PRIVATE vs PUBLIC
+# Dependency Graph
 
-Our aim in `Step 3` is to describe the usage of `PUBLIC` and `PRIVATE` keywords of Modern CMake and clarify
-their meanings. In this section we want to: (`--->` means can access)
+CMake can generate Graphviz files showing the dependencies between the targets in a project, as well as external libraries which are linked against.
 
-1. build a `driver` which uses a function `F` implemented by mylib : `driver --> mylib`
-2. mylib implements `F` by using `csapp` library functions : `mylib --> csapp`
-3. driver needs to access `mylib` and use `F` but driver should not be able to access 
-  `csapp` library : `driver --x--> csapp`
-4. `mylib` has a helper function `G` that is used to implement `F`. But `G` shouldn't be 
-  accessible to `driver`. : `driver --x--> mylib's private headers`
-5. `mylib` should not be able to access `log` library: `mylib --X--> log`     
-6. So, we simply want to make `mylib-->csapp` dependency private!
+For more details, see: https://cmake.org/cmake/help/latest/module/CMakeGraphVizOptions.html
 
- Below is the summary of our design policy
+To install graphviz
 
- * `driver --> mylib ---> csapp --> pthread` 
- 
- * `driver --> log`
+* `sudo apt-get update`
+* `sudo apt-get install graphviz`
 
- * `driver --X--> csapp`
+When running CMake with the `--graphviz=foo.dot` option, it produces:
 
- * `mylib --X--> log`       
+* a `foo.dot` file, showing all dependencies in the project
 
-# Targets are like objects
+* a `foo.dot.<target>` file for each target, showing on which other targets it depends
 
-CMake treats targets as object-like entities and uses the targets properties (members). Some of the properties of targets are: 
+* a `foo.dot.<target>.dependers` file for each target, showing which other targets depend on it
 
-1. `INCLUDE_DIRECTORIES`: List of preprocessor include file search directories.
+Those `.dot` files can be converted to images using the `dot` command from the Graphviz package:
 
-2. `COMPILE_DEFINITIONS`: Preprocessor definitions for compiling a target’s sources. (LIKE: `UNIT_TESTING=1` or `IO_TEST=1`)
+`dot -Tpng -o foo.png foo.dot`
+The different dependency types `PUBLIC`, `INTERFACE` and `PRIVATE` are represented as solid, dashed and dotted edges.
 
-3. `COMPILE_OPTIONS`: List of options to pass to the compiler. (LIKE: `Werror` `Wall` `Wextra`)
-    
-4. ... There are many: See  https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html#target-properties 
+## Simple script by **StableCoder**
 
+You can create a dependency graph of your project in very simple way by the
+cmake script developed by `StableCoder`: https://github.com/StableCoder/cmake-scripts
 
-These properties (members) manipulated by (member-functions like ) 
+Thank you George for making this avewome scripts available for us!
 
-* `target_include_directories()` 
+## Set the searching location for cmake 'include' locations
 
-* `target_compile_definitions()`
+First create a `cmake/modules` folder on top level of your project and include `dependency-graph.cmake`
+module inside of it.
 
-* `target_compile_options()`
+Next include `set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/scripts)` into the top level project. This will inform cmake where
+to search for cmake modules.
 
-The scope of theses properties are defined by the keywords `PUBLIC-PRIVATE`:
+## Include dependency-graph module
 
-(There is one more keyword `INTERFACE`: See the discussion: https://stackoverflow.com/questions/26243169/cmake-target-include-directories-meaning-of-scope )
+`dependency-graph` script aims to generate a dependency graph of a single project. Now inside of your top level `CMakeLists.txt`
 
-But what do we mean by scope?
+1. `include(dependency-graph)`. This will include the module `dependency-graph` in the directory `cmake/scripts`
 
-When you use the `PRIVATE` keyword in `target_include_directories(<target> ...)` and alike, 
-you tell CMake to populate members of `<target>`
+2. `gen_dep_graph("png")` This will generate an executable `dep-graph-${PROJECT_NAME}`.
 
-When you use the `PUBLIC` keyword in `target_include_directories(<target>)` and alike, 
-you tell CMake 
-
-* to populate members of `<target>` and also 
-
-* tell CMake to append members of `<target>` to any `<client>` members of which links `<target>`. 
-
-* If we use `PRIVATE` this won't be the case.
-
-# driver can access mylib and log
-
-Now we take a look at `Driver/CMakeLists.txt`. When the macros expanded we have 
-
-* `target_link_libraries(driver PRIVATE mylib`) and  `target_link_libraries(driver PRIVATE log`).
-
-This enables `driver`'s access to `mylib` and `log`'s public resources, i.e., `main.c` can include `mylib.h` and `log.h` 
-and use these libraries.
-
-Here `PRIVATE` or `PUBLIC` is not important since `driver` as an executible is the final destination
-
-Hence we have `driver-->mylib` and `driver-->log`
-
-# driver cannot access csapp and mylib's private headers
-
-Now we take a look at `Mylib/CMakeLists.txt`. When the macros expanded we have 
-
-* `target_include_directories(mylib PUBLIC Mylib/include)`.
-
-Any `client` that links `mylib` can acces the public headers of `mylib` inside the folder `Mylib/include` , but *cannot* access it's private headers (and sources) residing inside `MyLib/src`
-
-**Exp**: Since `driver` links `mylib`, `main.c` can access `mylib.h` but it cannot access `mylib_provate.h`.
-To convince yourself, uncomment `#include "mylib_provivate` in `main.c` and see what happens!
+You need to run the executable, to see the generated file which is of type `png` in our case. You could choose `pdf` or any of your favourite format.
 
 
-* `target_link_libraries(mylib PRIVATE csapp)`
-
-Any client that links `mylib` *cannot* access the public headers of `csapp`. 
-
-This is the tricky part: Note again that `csapp` announced `csapp.h` PUBLIC\`ly to any client that links `csapp`, so `mylib.c` can access `csapp.h`. But any client that links `mylib` (which is `driver` in our case) cannot access `csapp.h`, since linkage of `mylib` and `csapp` is PRIVATE.
-
-**Exp**: `main.c` can access `mylib.h` and `mylib.c` can access `csapp.h`. But `main.c` cannot access `csapp.h`. 
-Uncomment `#include "csapp.h` in `main.c` and see what happens!
-
-Hence we have `driver --X--> csapp`
 
 
-# mylib cannot access log
-
-Also,
-
-* `mylib.c` cannot access `log.h` since `mylib` didn't link `log` library.
 
 
-# Breaking the law
 
-Now, let's break the design principle and link mylib to csapp publicly!
 
-* If we declare `target_link_libraries(mylib PUBLIC csapp)`
-
-Then any client that links `mylib` can access the public headers of `csapp`.
-
-**Exp**: `main.c` can access `mylib.h` and `mylib.c` can access `csapp.h`. Now `main.c` can access `csapp.h`. 
-Uncomment `#include "csapp.h` in `main.c` and see that there won't be any error!
-Note also that even in this case, `main.c` cannot access `mylib_private.h`
