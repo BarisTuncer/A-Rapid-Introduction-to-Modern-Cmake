@@ -1,4 +1,4 @@
-# Rapid introduction to Modern CMake with hands on labs
+# Rapid introduction to Modern CMake with labs
 
 The aim of this tutorial is to provide a rapid introuduction to Modern CMake by a relatively non-trivial example and clarify the meanings of `PUBLIC` and `PRIVATE` keywords which is confusing to the beginners.  
 
