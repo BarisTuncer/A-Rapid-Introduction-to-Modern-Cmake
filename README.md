@@ -52,7 +52,9 @@ to search for cmake modules.
 
 ## Include dependency-graph module
 
-`dependency-graph` script aims to generate a dependency graph of a single project. Now inside of your top level `CMakeLists.txt`
+[CMakeLists]: CMakeLists.txt
+
+`dependency-graph` script aims to generate a dependency graph of a single project. Now inside of your top level **[CMakeLists]**
 
 1. `include(dependency-graph)`. This will include the module `dependency-graph` in the directory `cmake/scripts`
 
@@ -60,6 +62,7 @@ to search for cmake modules.
 
 You need to run the executable to see the generated file, which is of type `png` in our case. You could choose `pdf` or any of your favorite format.
 
+Inside **[CMakeLists]**, I made this step optional.
 
 
 
