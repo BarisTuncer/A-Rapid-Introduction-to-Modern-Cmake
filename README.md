@@ -20,6 +20,7 @@ When running CMake with the `--graphviz=foo.dot` option, it produces:
 Those `.dot` files can be converted to images using the `dot` command from the Graphviz package:
 
 `dot -Tpng -o foo.png foo.dot`
+
 The different dependency types `PUBLIC`, `INTERFACE` and `PRIVATE` are represented as solid, dashed and dotted edges.
 
 ## Simple script by **StableCoder**
@@ -52,7 +53,7 @@ to search for cmake modules.
 
 2. `gen_dep_graph("png")` This will generate an executable `dep-graph-${PROJECT_NAME}`.
 
-You need to run the executable, to see the generated file which is of type `png` in our case. You could choose `pdf` or any of your favorite format.
+You need to run the executable to see the generated file, which is of type `png` in our case. You could choose `pdf` or any of your favorite format.
 
 
 
