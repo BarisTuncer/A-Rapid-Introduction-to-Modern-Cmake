@@ -22,9 +22,3 @@ gen_dep_graph("pdf")
 
 set(CLANG_FORMAT_BIN_NAME clang-format)
 find_package(ClangFormat)
-set(CLANG_FORMAT_EXCLUDE_PATTERNS 
-    ${CMAKE_SOURCE_DIR}/build
-    ${CMAKE_SOURCE_DIR}/cmake
-    ${CMAKE_SOURCE_DIR}/Csapp
-    ${CMAKE_SOURCE_DIR}/Log
-)
