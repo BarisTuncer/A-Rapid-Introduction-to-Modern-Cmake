@@ -6,15 +6,19 @@ I divided this tutorial into 3 steps and provided 3 labs to test your knowledge.
 
 To make this tutorial joyful I used 2 external libraries.
 
-1 - `csapp.h` : This library is developed for `Computer Systems: A Programmer's Perspective` book by Randal E. Bryant and David R. O'Hallaron,
-which contains wrappers for some system functions in C and also implementation of robust IO functions. It is publicly available from the website of the book : https://csapp.cs.cmu.edu/. The reason I chose this library is that you need to link it with `pthread` library.
+[csapp]: http://csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c
+[log]: https://github.com/rxi/log.c/blob/master/README.md
+[rxi]: https://github.com/rxi
+[CSAPP]:https://csapp.cs.cmu.edu/
+1 - **[csapp]** : This library is developed for `Computer Systems: A Programmer's Perspective` book by Randal E. Bryant and David R. O'Hallaron,
+which contains wrappers for some system functions in C and also implementation of robust IO functions. It is publicly available from the website of the book **[CSAPP]**. The reason I chose this library is that you need to link it with `pthread` library.
 
 Thank you Randal E. Bryant and David R. O'Hallaron for making this library accessible for us!
 
-2- `log.h`: This library is a simple usage logging library developed by `rxi` and publicly available at https://github.com/rxi/log.c/blob/master/README.md.
+2-  **[log]** : This library is a simple usage logging library developed by **[rxi]** and publicly available at **[rxi]**'s github page.
 The reason I chose this library is that you need to compile it with the definition `DLOG_USE_COLOR` to get a colorful logging output. 
 
-Thank you `rxi` for making this library accessible for us.
+Thank you **[rxi]** for making this library accessible for us.
 
 ## Tutorial Steps and Labs
 
