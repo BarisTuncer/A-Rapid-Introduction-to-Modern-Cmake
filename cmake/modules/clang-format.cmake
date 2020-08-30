@@ -1,19 +1,10 @@
 # A CMake script to find all source files and setup clang-format targets for them
 
 # Find all source files
-#set(CLANG_FORMAT_CXX_FILE_EXTENSIONS ${CLANG_FORMAT_CXX_FILE_EXTENSIONS} *.cpp *.h *.cxx *.hxx *.hpp *.cc *.ipp)
-set(CLANG_FORMAT_CXX_FILE_EXTENSIONS ${CLANG_FORMAT_CXX_FILE_EXTENSIONS} *.[ch] )
+set(CLANG_FORMAT_CXX_FILE_EXTENSIONS ${CLANG_FORMAT_CXX_FILE_EXTENSIONS} *.c *.cpp *.h *.cxx *.hxx *.hpp *.cc *.ipp)
 file(GLOB_RECURSE ALL_SOURCE_FILES ${CLANG_FORMAT_CXX_FILE_EXTENSIONS})
 
-# Don't include some common build folders
-set(CLANG_FORMAT_EXCLUDE_PATTERNS ${CLANG_FORMAT_EXCLUDE_PATTERNS} "/CMakeFiles/" "cmake")
-set(CLANG_FORMAT_EXCLUDE_PATTERNS 
-    ${CMAKE_SOURCE_DIR}/build
-    ${CMAKE_SOURCE_DIR}/cmake
-    ${CMAKE_SOURCE_DIR}/Csapp
-    ${CMAKE_SOURCE_DIR}/Log
-)
-
+    
 # get all project files file
 foreach (SOURCE_FILE ${ALL_SOURCE_FILES}) 
     foreach (EXCLUDE_PATTERN ${CLANG_FORMAT_EXCLUDE_PATTERNS})

@@ -19,6 +19,17 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules
 include(dependency-graph)
 gen_dep_graph("pdf")
 
-
-set(CLANG_FORMAT_BIN_NAME clang-format)
-find_package(ClangFormat)
+option(ENABLE_FORMATTING "clang-format formatting" ON)
+if(ENABLE_FORMATTING)
+    set(CLANG_FORMAT_EXCLUDE_PATTERNS 
+        ${CMAKE_SOURCE_DIR}/build
+        ${CMAKE_SOURCE_DIR}/cmake
+        ${CMAKE_SOURCE_DIR}/Csapp
+        ${CMAKE_SOURCE_DIR}/Log
+    )
+    foreach(folder ${CLANG_FORMAT_EXCLUDE_PATTERNS})
+        message(STATUS "Disabling " ${folder} " for clang-format")
+    endforeach()
+    set(CLANG_FORMAT_BIN_NAME clang-format)
+    find_package(ClangFormat)
+endif()

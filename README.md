@@ -27,18 +27,10 @@ To use his script, we simply add to following commands to our top level CMakeLis
 
 In line 4 of `clang-format.cmake` by **[Thom]**, I also included `.c` files into the `CLANG_FORMAT_CXX_FILE_EXTENSIONS` list.
 
-To exclude the directories that I don't want to be formatted, I also updated the list `CLANG_FORMAT_EXCLUDE_PATTERNS` at the beginning of
-`clang-format.cmake`:
+[CMakeLists]: CMakeLists.txt
+In top level [CMakeLists], I made formatting optional and excluded the directories that I don't want to be formatted by updating the list `CLANG_FORMAT_EXCLUDE_PATTERNS` 
 
-`set(CLANG_FORMAT_EXCLUDE_PATTERNS 
-    ${CMAKE_SOURCE_DIR}/build
-    ${CMAKE_SOURCE_DIR}/cmake
-    ${CMAKE_SOURCE_DIR}/Csapp
-    ${CMAKE_SOURCE_DIR}/Log
-)`
-
-Otherwise his script will format every `*[ch]` source file
-in the project folder.
+Otherwise his **[Thom]**'s script will format every `*[ch]` source file in the project folder.
 
 After the build step, his script will generate 3 utilities called `format`, `format-check` and `format-check-changed`.
 Clear explanations of what can be done with these utilities are given in the **[Thom]**'s github page. Basically 
