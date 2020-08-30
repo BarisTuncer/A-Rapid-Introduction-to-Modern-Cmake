@@ -1,6 +1,6 @@
 # Format checking
-
-`clang-format`  is an excellent tool to format C/C++/Java/JavaScript/Objective-C/Protobuf code. 
+[clang-format]: https://clang.llvm.org/docs/ClangFormat.html
+**[clang-format]**  is an excellent simple usage tool to format `C/C++/Java/JavaScript/Objective-C/Protobuf` code. It can support your workflow in a variety of ways including a standalone tool and editor integrations, including Visual Studio Code and Emacs!
 
 To install
 
@@ -30,7 +30,7 @@ In line 4 of `clang-format.cmake` by **[Thom]**, I also included `.c` files into
 [CMakeLists]: CMakeLists.txt
 In top level [CMakeLists], I made formatting optional and excluded the directories that I don't want to be formatted by updating the list `CLANG_FORMAT_EXCLUDE_PATTERNS` 
 
-Otherwise his **[Thom]**'s script will format every `*[ch]` source file in the project folder.
+Otherwise **[Thom]**'s script will format every `*[ch]` source file in the project folder.
 
 After the build step, his script will generate 3 utilities called `format`, `format-check` and `format-check-changed`.
 Clear explanations of what can be done with these utilities are given in the **[Thom]**'s github page. Basically 
