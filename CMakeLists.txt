@@ -15,10 +15,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules
                       ${CMAKE_MODULE_PATH}
                       )
 
-# Include the dependency-graph module
-include(dependency-graph)
-gen_dep_graph("pdf")
-
 option(ENABLE_FORMATTING "clang-format formatting" ON)
 if(ENABLE_FORMATTING)
     set(CLANG_FORMAT_EXCLUDE_PATTERNS 
