@@ -12,5 +12,8 @@ add_subdirectory(Driver)
 # Set the searching location for cmake 'include' locations
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 # Include the dependency-graph module
-include(dependency-graph)
-gen_dep_graph("pdf")
+option(CREATE_DEPENDENCY_GRAPH "Create dependency graph executable" OFF)
+if(CREATE_DEPENDENCY_GRAPH)
+    include(dependency-graph)
+    gen_dep_graph("pdf")
+endif()

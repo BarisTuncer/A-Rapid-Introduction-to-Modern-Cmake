@@ -1,10 +1,13 @@
 # Dependency Graph
 
-CMake can generate Graphviz files showing the dependencies between the targets in a project, as well as external libraries which are linked against.
+[CMake graphviz options]: https://cmake.org/cmake/help/latest/module/CMakeGraphVizOptions.html
+[Graphviz]: https://graphviz.org/
 
-For more details, see: https://cmake.org/cmake/help/latest/module/CMakeGraphVizOptions.html
+CMake can generate [Graphviz] files showing the dependencies between the targets in a project, as well as external libraries which are linked against.
 
-To install graphviz
+You can get more information at **[CMake graphviz options]**
+
+To install [Graphviz]
 
 * `sudo apt-get update`
 * `sudo apt-get install graphviz`
@@ -17,25 +20,27 @@ When running CMake with the `--graphviz=foo.dot` option, it produces:
 
 * a `foo.dot.<target>.dependers` file for each target, showing which other targets depend on it
 
-Those `.dot` files can be converted to images using the `dot` command from the Graphviz package:
+Those `.dot` files can be converted to images using the `dot` command from the [Graphviz] package:
 
 `dot -Tpng -o foo.png foo.dot`
 
 The different dependency types `PUBLIC`, `INTERFACE` and `PRIVATE` are represented as solid, dashed and dotted edges.
 
-## Simple script by **StableCoder**
+[StableCoder]: https://github.com/StableCoder/cmake-scripts
 
-You can create a dependency graph of your project in very simple way by the
-cmake script developed by `StableCoder`: https://github.com/StableCoder/cmake-scripts
+## A useful script by **[StableCoder]**
+
+You can create a dependency graph of your project in very simple way by the CMake module developed by **[StableCoder]**
 
 Thank you George for making this awesome scripts available for us!
 
-Note that cmake-scripts by `StableCoder` under the `Apache License`.
+Note that cmake-scripts by **[StableCoder]** under the `Apache License`.
 
-Like `MIT Licence`, `Apache License` is also a permissive license. However, it has stringent terms when it comes to modifications. It requires you to explicitly list out all the modifications that you’ve done in the original software, i.e., you’re required to preserve modification notices.
+Like `MIT Licence`, `Apache License` is also a permissive license. However, it has stringent terms when it comes to modifications. 
+It requires you to explicitly list out all the modifications that you’ve done in the original software, i.e., you’re required to preserve modification notices.
 
-To learn more  about the differences between `MIT` and `Apache` licenses, see for example, https://resources.whitesourcesoftware.com/blog-whitesource/top-10-apache-license-questions-answered 
-
+[About Licenses]: https://resources.whitesourcesoftware.com/blog-whitesource/top-10-apache-license-questions-answered 
+To learn more about the differences between `MIT` and `Apache` licenses, see for example, [About Licenses]
 
 ## Set the searching location for cmake 'include' locations
 
@@ -54,6 +59,7 @@ to search for cmake modules.
 2. `gen_dep_graph("png")` This will generate an executable `dep-graph-${PROJECT_NAME}`.
 
 You need to run the executable to see the generated file, which is of type `png` in our case. You could choose `pdf` or any of your favorite format.
+
 
 
 
