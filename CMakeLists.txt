@@ -14,7 +14,3 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 # Include the dependency-graph module
 include(dependency-graph)
 gen_dep_graph("pdf")
-
-
-
-
