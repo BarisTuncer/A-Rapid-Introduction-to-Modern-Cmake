@@ -10,24 +10,24 @@ To generate a `google` style `.clang-format`, run the following command in the t
 
 * `clang-format -style=google -dump-config > .clang-format`
 
-To see the other options and learn what `clang-format` does be sure to check  **[ClangFormatStyleOptions](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)**
+To see the other options and learn what `clang-format` can do, be sure to check  **[Clang Format Style Options](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)**
 
 [Thom]: https://github.com/ttroy50/cmake-examples/tree/master/04-static-analysis/clang-format 
 
 ## A useful script by **[Thom]**
+[CMakeLists]: CMakeLists.txt
 
 I invite you have a look at **[Thom]**'s github page which has helpful cmake modules to check if your source code matches against your code style guidelines.
 
 Thank you **Thom** for making this tool available for us!
 
-To use his script, we simply add to following commands to our top level CMakeLists.txt. 
+To use his script, after creating `.clang-format` file into our project folder, we simply add the following commands into our top level [CMakeLists]. 
 
 * `set(CLANG_FORMAT_BIN_NAME clang-format)` 
 * `find_package(ClangFormat)`
 
-In line 4 of `clang-format.cmake` by **[Thom]**, I also included `.c` files into the `CLANG_FORMAT_CXX_FILE_EXTENSIONS` list.
+In line 4 of **[clang-format.cmake](cmake/modules/clang-format.cmake)** by **[Thom]**, I also included `.c` files into the `CLANG_FORMAT_CXX_FILE_EXTENSIONS` list.
 
-[CMakeLists]: CMakeLists.txt
 In top level [CMakeLists], I made formatting optional and excluded the directories that I don't want to be formatted by updating the list `CLANG_FORMAT_EXCLUDE_PATTERNS`. Otherwise **[Thom]**'s script will format every `*[ch]` source file in the project folder.
 
 After the build step, his script will generate 3 utilities called `format`, `format-check` and `format-check-changed`.
