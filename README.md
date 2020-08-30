@@ -1,4 +1,4 @@
-# Rapid introduction to Modern CMake with labs
+# Rapid introduction to Modern CMake 
 
 The aim of this tutorial is to provide a rapid introuduction to Modern CMake by a relatively non-trivial example and clarify the meanings of `PUBLIC` and `PRIVATE` keywords which is confusing to the beginners.  
 
@@ -37,6 +37,18 @@ Tutorial steps as well as the labs and their solutions are in the branches of th
 * In `Lab3`, you will create `Layer1` folder which contains `log` and `mylib` libraries, `Layer2` folder which contains `csapp` library. So, the goal is to enforce `driver` to be able to access only `Layer1` which depends on `Layer2`. `driver` should not be able to access resources of `Layer2`. 
 
 After 3 easy steps, we will see how easy to keep modularity in our code with the help of `Modern CMake`. 
+
+[ttroy50]: https://github.com/ttroy50/cmake-examples/tree/master/04-static-analysis/clang-format
+
+[StableCoder]: https://github.com/StableCoder/cmake-scripts
+
+Tutorial also has 2 more optional branches:
+
+* `format-your-code`, which explains how to format your code based on `clang-format` by a script developed by **[ttroy50]**
+
+* `visualize-dependencies`, which explains how to visualize the library dependencies of your code based on `graphviz` by a script developed by **[StableCoder]**
+
+Thank you Thom and George for making your useful scripts available for us!
 
 ## Design policy
 
