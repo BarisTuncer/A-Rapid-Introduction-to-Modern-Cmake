@@ -44,12 +44,18 @@ To be able to run `format-check-changed` utility you should give a permission to
 Apparently, the most useful utility is `format`. Run it and see the difference via `git diff`. That's what I do.
 
 ## Note: 
-If you are getting an error like: 
-YAML:4:16: error: unknown key 'Delimiter'                                       
-  - Delimiter: pb 
+With the new version of `clang-format` you may get an error like: 
 
-Then remove the lines in .clang-format
+YAML:4:16: error: unknown key 'Delimiter'                                       
+
+  Delimiter: pb 
+
+To fix the issue, remove the lines below in the .clang-format file
+
 RawStringFormats:
-  - Delimiter: pb
-    Language: TextProto
-    BasedOnStyle: google
+
+  Delimiter: pb
+
+  Language: TextProto
+
+  BasedOnStyle: google
