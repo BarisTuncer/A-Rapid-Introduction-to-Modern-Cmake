@@ -101,7 +101,7 @@ pid_t Wait(int *status)
 }
 /* $end wait */
 
-pid_t Waitpid(pid_t pid, int *iptr, int options) 
+pid_t Waitpid(pid_t pid, int *iptr, int options)
 {
     pid_t retpid;
 

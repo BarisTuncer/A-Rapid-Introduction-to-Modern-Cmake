@@ -5,6 +5,7 @@
 To install
 
 * `sudo apt-get install clang-format`
+* `sudo dnf install clang` 
 
 To generate a `google` style `.clang-format`, run the following command in the terminal.
 

@@ -46,7 +46,7 @@ def get_git_root(git_bin):
     cmd = [git_bin, "rev-parse", "--show-toplevel"]
     try:
         return subprocess.check_output(cmd).strip()
-    except subprocess.CalledProcessError, e:
+    except subprocess.CalledProcessError as e:
         print("Error calling git [{}]".format(e))
         raise
 
@@ -91,7 +91,8 @@ def get_changed_files(git_bin, excludes, file_extensions):
     returncode = 0
     try:
         cmd_output = subprocess.check_output(cmd)
-        for line in cmd_output.split('\n'):
+        print(cmd_output)
+        for line in cmd_output.split("\n"):
             if len(line) > 0:
                 file = clean_git_filename(line)
                 if not file:
@@ -107,7 +108,7 @@ def get_changed_files(git_bin, excludes, file_extensions):
                         print("Will check file [{}]".format(file))
                         output.append(file)
 
-    except subprocess.CalledProcessError, e:
+    except subprocess.CalledProcessError as e:
         print("Error calling git [{}]".format(e))
         returncode = e.returncode
 
@@ -129,7 +130,7 @@ def run_clang_format(clang_format_bin, changed_files):
         if "replacement offset" in cmd_output:
             print("ERROR: Changed files don't match format")
             return 1
-    except subprocess.CalledProcessError, e:
+    except subprocess.CalledProcessError as e:
         print("Error calling clang-format [{}]".format(e))
         return e.returncode
 
