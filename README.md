@@ -60,7 +60,7 @@ In case you wonder how to generate it on command line:
 1. `mkdir build` (if you want to delete already existing `build` folder: `rd /s /q build`)
 2. `cd build`
 3. `cmake ..` (this will generate a `sln` file inside `build`. In our case is it is called `NonTrivialCMakeExample.sln`)
-4. `devenv NonTrivialCMakeExample.sln` (This will create `main.exe` in `build\Debug`)
+4. `devenv NonTrivialCMakeExample.sln /Build` (This will create `main.exe` in `build\Debug`)
 
 NOte: You may need to add the folder which contains `devenv` into your envronment path: In my case it is in: `C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE` folder
 
