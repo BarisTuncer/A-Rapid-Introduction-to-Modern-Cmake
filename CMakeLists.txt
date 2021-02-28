@@ -3,7 +3,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 project(NonTrivialCMakeExample)
-#Adds options to the compilation of source files.
+# Adds options to the compilation of source files.
 # NOTE: This is global. Act for all targets in the current directory and below that are added after this command is invoked
 option(ENABLE_WARNINGS "Compile with all warnings" ON)
 if(ENABLE_WARNINGS)
