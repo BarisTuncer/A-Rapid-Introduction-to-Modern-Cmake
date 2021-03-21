@@ -71,5 +71,5 @@ Our aim in `Step 3` is: (--> means can access)
 
  * `driver --X--> csapp`
 
- * `mylib --X--> log`       
+ * `mylib --X--> log`
 
