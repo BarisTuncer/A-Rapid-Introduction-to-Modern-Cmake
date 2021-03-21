@@ -4,6 +4,10 @@ description = ""
 weight = 1
 +++
 
+[Lab3]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/Lab3
+
+Let's switch to **[Lab3]** branch.
+
 We have created
 
 * `Layer1` inside of which `log` and `mylib` libraries reside

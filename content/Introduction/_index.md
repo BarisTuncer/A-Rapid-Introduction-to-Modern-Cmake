@@ -4,11 +4,20 @@ description = ""
 weight = 2
 +++
 
-The aim of this tutorial is to provide a rapid introuduction to Modern CMake by a relatively non-trivial examples and clarify the meanings of `PUBLIC` and `PRIVATE` keywords which is confusing to the beginners.
+[Step1]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/Step1
+[Step2]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/Step2
+[Step3]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/Step3
+[Lab1]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/Lab1
+[Lab2]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/Lab2
+[Lab3]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/Lab3
 
-You can access to the repo prepared for the tutorial: **[repo](https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/master)** 
+The aim of this tutorial is to provide a rapid introuduction to Modern CMake by relatively non-trivial examples and clarify the meanings of `PUBLIC` and `PRIVATE` keywords which is confusing to the beginners.
 
-# A rapid introduction to Modern CMake 
+You can access to the repo prepared for the tutorial by the link **[repo](https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/master)** 
+
+Tutorial steps as well as the labs and their solutions are in the branches of this repo. You can access them by changing the branch from the `master` to the one of the branches via  `git checkout`.
+
+# CMake in 3 easy steps 
 
 I divided this tutorial into 3 steps and provided 3 labs to test your knowledge.
 
@@ -33,17 +42,17 @@ Thank you **[rxi]** for making this library accessible for us.
 
 Tutorial steps as well as the labs and their solutions are in the branches of this repo. You can access them by changing the branch from the `master` to the one of the branches above or via  `git checkout`. Below is the schedule.
 
-* In `Step1`, we will compile a simple `Hello Modern CMake` program.
+* In **[Step1]**, we will compile a simple `Hello Modern CMake` program.
 
-* In `Lab1`, you will add another executable to the project of `Step1`
+* In **[Lab1]**, you will add another executable to the project of `Step1`
 
-* In `Step2`, we will add `log` library into our program.
+* In **[Step2]**, we will add `log` library into our program.
 
-* In `Lab2`, you will create `Libraries` folder inside of which `log` and `csapp` libraries reside.
+* In **[Lab2]**, you will create `Libraries` folder inside of which `log` and `csapp` libraries reside.
 
-* In `Step3`, we will add `mylib` library into our project which will depend on `csapp` library satisfying the design policy described below in the Design Policy section. 
+* In **[Step3]**, we will add `mylib` library into our project which will depend on `csapp` library satisfying the design policy described below in the Design Policy section. 
 
-* In `Lab3`, you will create `Layer1` folder which contains `log` and `mylib` libraries, `Layer2` folder which contains `csapp` library. So, the goal is to enforce `driver` to be able to access only `Layer1` which depends on `Layer2`. `driver` should not be able to access resources of `Layer2`. 
+* In **[Lab3]**, you will create `Layer1` folder which contains `log` and `mylib` libraries, `Layer2` folder which contains `csapp` library. So, the goal is to enforce `driver` to be able to access only `Layer1` which depends on `Layer2`. `driver` should not be able to access resources of `Layer2`. 
 
 After 3 easy steps, we will see how easy to keep modularity in our code with the help of `Modern CMake`. 
 
@@ -61,7 +70,9 @@ Thank you Thom and George for making your useful scripts available for us!
 
 ## Design policy
 
-Our aim in `Step 3` is: (--> means can access)
+Our aim in **[Step3]** is: 
+
+(below  --> means can access)
 
 * to build a `driver` which uses a function `F` implemented by mylib : `driver --> mylib`
 * mylib implements `F` by using `csapp` library functions : `mylib --> csapp`

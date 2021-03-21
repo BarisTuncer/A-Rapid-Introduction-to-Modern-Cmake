@@ -1,24 +1,29 @@
 +++
-title = "Step3"
+title = "Step3: Public vs Private"
 description = ""
 weight = 2
 +++
 
+[Step3]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/tree/Step3
+
+Let's switch to **[Step3]** branch.
 # PRIVATE vs PUBLIC
 
-Our aim in `Step 3` is to describe the usage of `PUBLIC` and `PRIVATE` keywords of Modern CMake and clarify
-their meanings. In this section we want to: (`--->` means can access)
+Our aim in `Step3` is to describe the usage of `PUBLIC` and `PRIVATE` keywords of Modern CMake and clarify
+their meanings. In this section we want to: 
 
-1. build a `driver` which uses a function `F` implemented by mylib : `driver --> mylib`
-2. mylib implements `F` by using `csapp` library functions : `mylib --> csapp`
-3. driver needs to access `mylib` and use `F` but driver should not be able to access 
+(below `--->` means can access)
+
+1. build a `driver` which uses a function `F` implemented by `mylib` : `driver --> mylib`
+2. `mylib` implements `F` by using `csapp` library functions : `mylib --> csapp`
+3. `driver` needs to access `mylib` and use `F` but `driver` should not be able to access 
   `csapp` library : `driver --x--> csapp`
 4. `mylib` has a helper function `G` that is used to implement `F`. But `G` shouldn't be 
-  accessible to `driver`. : `driver --x--> mylib's private headers`
+  accessible to `driver` : `driver --x--> mylib's private headers`
 5. `mylib` should not be able to access `log` library: `mylib --X--> log`     
 6. So, we simply want to make `mylib-->csapp` dependency private!
 
- Below is the summary of our design policy
+**Below is the summary of our design policy**
 
  * `driver --> mylib ---> csapp --> pthread` 
  
@@ -69,11 +74,14 @@ you tell CMake
 
 # driver can access mylib and log
 
-Now we take a look at `Driver/CMakeLists.txt`. When the macros expanded we have 
+[Step3/Driver/CMakeLists.txt]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/blob/Step3/Driver/CMakeLists.txt
+[Step3/Driver/main.c]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/blob/Step3/Driver/main.c
+
+Now we have a look at **[Step3/Driver/CMakeLists.txt]**. When the macros expanded we have 
 
 * `target_link_libraries(driver PRIVATE mylib`) and  `target_link_libraries(driver PRIVATE log`).
 
-This enables `driver`'s access to `mylib` and `log`'s public resources, i.e., `main.c` can include `mylib.h` and `log.h` 
+This enables `driver`'s access to `mylib` and `log`'s public resources, i.e., **[Step3/Driver/main.c]** can include `mylib.h` and `log.h` 
 and use these libraries.
 
 Here `PRIVATE` or `PUBLIC` is not important since `driver` as an executible is the final destination
@@ -82,21 +90,23 @@ Hence we have `driver-->mylib` and `driver-->log`
 
 # driver cannot access csapp and mylib's private headers
 
-Now we take a look at `Mylib/CMakeLists.txt`. When the macros expanded we have 
+[Step3/Mylib/CMakeLists.txt]:https://github.com/BarisTuncer/A-Rapid-Introduction-to-Modern-Cmake/blob/Step3/Mylib/CMakeLists.txt
+
+Now we take a look at **[Step3/Mylib/CMakeLists.txt]**. When the macros expanded we have 
 
 * `target_include_directories(mylib PUBLIC Mylib/include)`.
 
-Any `client` that links `mylib` can acces the public headers of `mylib` inside the folder `Mylib/include` , but *cannot* access it's private headers (and sources) residing inside `MyLib/src`
+Any `client` that links `mylib` can acces the public headers of `mylib` inside the folder `Mylib/include` , but **cannot** access it's private headers (and sources) residing inside `MyLib/src`
 
-**Exp**: Since `driver` links `mylib`, `main.c` can access `mylib.h` but it cannot access `mylib_provate.h`.
-To convince yourself, uncomment `#include "mylib_provivate` in `main.c` and see what happens!
+**Exp**: Since `driver` links `mylib`, `main.c` can access `mylib.h` but it **cannot** access `mylib_private.h`.
+To convince yourself, uncomment `#include "mylib_provivate` in **[Step3/Driver/main.c]** and see what happens!
 
 
 * `target_link_libraries(mylib PRIVATE csapp)`
 
 Any client that links `mylib` *cannot* access the public headers of `csapp`. 
 
-This is the tricky part: Note again that `csapp` announced `csapp.h` PUBLIC\`ly to any client that links `csapp`, so `mylib.c` can access `csapp.h`. But any client that links `mylib` (which is `driver` in our case) cannot access `csapp.h`, since linkage of `mylib` and `csapp` is PRIVATE.
+**This is the tricky part**: Note again that `csapp` announced `csapp.h` PUBLIC\`ly to any client that links `csapp`, so `mylib.c` can include `csapp.h`. But any client that links `mylib` (which is `driver` in our case) cannot access (even if it tries to include) `csapp.h`, since linkage of `mylib` and `csapp` is PRIVATE.
 
 **Exp**: `main.c` can access `mylib.h` and `mylib.c` can access `csapp.h`. But `main.c` cannot access `csapp.h`. 
 Uncomment `#include "csapp.h` in `main.c` and see what happens!
@@ -106,10 +116,7 @@ Hence we have `driver --X--> csapp`
 
 # mylib cannot access log
 
-Also,
-
-* `mylib.c` cannot access `log.h` since `mylib` didn't link `log` library.
-
+Also `mylib` cannot access `log` since `mylib` didn't link `log` library.
 
 # Breaking the law
 
