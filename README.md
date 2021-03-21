@@ -1,5 +1,7 @@
 # A rapid introduction to Modern CMake 
 
+(You can follos the interactive tutorial at https://rapid-introduction-to-cmake.netlify.app/introduction/ )
+
 The aim of this tutorial is to provide a rapid introuduction to Modern CMake by a relatively non-trivial example and clarify the meanings of `PUBLIC` and `PRIVATE` keywords which is confusing to the beginners.  
 
 I divided this tutorial into 3 steps and provided 3 labs to test your knowledge.
