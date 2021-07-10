@@ -8,7 +8,7 @@ project(NonTrivialCMakeExample)
 # Adds options to the compilation of source files.
 # NOTE: This is global. Act for all targets in the current directory and below 
 # that are added after this command is invoked
-option(ENABLE_WARNINGS "Compile with all warnings" ON)
+option(ENABLE_WARNINGS "Compile with all warnings" OFF)
 
 if(ENABLE_WARNINGS)
   if(CMAKE_C_COMPILER_ID MATCHES "GNU"
