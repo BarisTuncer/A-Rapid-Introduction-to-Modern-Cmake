@@ -1,5 +1,7 @@
 # CMake in 3 easy steps 
 
+
+
 Tutorial steps as well as the labs and their solutions are in the branches of this repo
 
 You can follow the interactive tutorial at https://rapid-introduction-to-cmake.netlify.app/introduction/
