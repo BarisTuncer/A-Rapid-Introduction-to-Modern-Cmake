@@ -3,24 +3,21 @@
 Our aim in `Step 3` is to describe the usage of `PUBLIC` and `PRIVATE` keywords of Modern CMake and clarify
 their meanings. In this section we want to: (`--->` means can access)
 
-1. build a `driver` which uses a function `F` implemented by mylib : `driver --> mylib`
-2. mylib implements `F` by using `csapp` library functions : `mylib --> csapp`
-3. driver needs to access `mylib` and use `F` but driver should not be able to access 
+1. build a `driver` which uses a function `lazy_sum` implemented by mylib : `driver --> mylib`
+2. mylib implements `lazy_sum` by using `csapp` library functions : `mylib --> csapp`
+3. driver needs to access `mylib` and use `lazy_sum` but driver should not be able to access 
   `csapp` library : `driver --x--> csapp`
-4. `mylib` has a helper function `G` that is used to implement `F`. But `G` shouldn't be 
-  accessible to `driver`. : `driver --x--> mylib's private headers`
-5. `mylib` should not be able to access `log` library: `mylib --X--> log`     
-6. So, we simply want to make `mylib-->csapp` dependency private!
+4. `mylib` has a helper function `mylibs_secret_helper` that is used to implement `lazy_sum`. But `mylibs_secret_helper`
+  shouldn't be accessible to `driver`. : `driver --x--> mylib's private headers`    
+5. So, we simply want to make `mylib-->csapp` dependency private!
 
  Below is the summary of our design policy
 
- * `driver --> mylib ---> csapp --> pthread` 
+ * `driver --> mylib ---> csapp` 
  
- * `driver --> log`
-
  * `driver --X--> csapp`
 
- * `mylib --X--> log`       
+ * `driver --X--> mylibs_secret_helper`
 
 # Targets are like objects
 

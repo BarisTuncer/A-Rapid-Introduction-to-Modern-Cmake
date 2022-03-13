@@ -1,4 +1,4 @@
 #ifndef __MYLIBPRIVATE_H__
 #define __MYLIBPRIVATE_H__
-void secret_helper_for_fantastic_sum(int);
+void mylibs_secret_helper(int);
 #endif /* __MYLIBPUBLIC_H__ */
