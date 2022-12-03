@@ -20,7 +20,15 @@ The name of the library will be `loglib`.
 By this way **[main.c](Driver/main.c)** will simply declare `#include "log.h"`to get the taste of `loglib`. Note that we don't need to use relative paths!
 
 * `target_compile_definitions(${PROJECT_NAME} PRIVATE LOG_USE_COLOR)` : To be able to see logs in color, we need to compile with `LOG_USE_COLOR` definition.
-Withour CMake we would use `-DLOG_USE_COLOR` while compiling.
+Without CMake we would use `-DLOG_USE_COLOR` while compiling.
+
+* Finally, # on Windows dll's should be in the folder where exe file resides, so we need
+`set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)`
+
+`set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)`
+
+`set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)`
+
 
 ## Ready to build
 
